@@ -71,5 +71,5 @@ async def on_message(message):
                 code = '{count} Tournament Code: {d}'.format(count=count + 1, d=d)
                 await message.channel.send(code)
         else:
-            await message.channel.send('这个XBOX烟谁扔的？（错误指令）')
+            await message.channel.send('这个XBOX烟谁扔的？')
 client.run(os.getenv('TOKEN'))
