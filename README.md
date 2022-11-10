@@ -1,6 +1,3 @@
-# bjhj-bot
-Discord Bot called BJHJ BOT
-=======
 # BJHJ-BOT
 A Discord Bot called BJHJ BOT
 
