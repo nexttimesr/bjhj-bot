@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 import requests
 import json
+from keep_alive import keep_alive
 
 load_dotenv()
 intent = discord.Intents.default()
@@ -55,21 +56,13 @@ async def on_message(message):
         return
 
     if message.content.startswith('$'):
-        if message.content == '$nz':
-            data = getCodes('nz')
-            for count, d in enumerate(data):
-                code = '{count} Tournament Code: {d}'.format(count=count + 1, d=d)
-                await message.channel.send(code)
-        elif message.content == '$solo':
-            data = getCodes('solo')
-            for count, d in enumerate(data):
-                code = '{count} Tournament Code: {d}'.format(count=count + 1, d=d)
-                await message.channel.send(code)
-        elif message.content == '$aram':
-            data = getCodes('aram')
+        if message.content == '$nz' or message.content == '$solo' or message.content == '$aram':
+            data = getCodes(message.content[1:])
             for count, d in enumerate(data):
                 code = '{count} Tournament Code: {d}'.format(count=count + 1, d=d)
                 await message.channel.send(code)
         else:
             await message.channel.send('这个XBOX烟谁扔的？')
+
+keep_alive()
 client.run(os.getenv('TOKEN'))
