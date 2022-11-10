@@ -11,4 +11,3 @@ $nz: create 20 League of Legends tournament codes for custom 5v5 tournament on S
 $solo: create 2 League of Legends tournament codes for custom 1v1 tournament on Summoner's Rift (Blind Pick)
 
 $aram: create 20 League of Legends tournament codes for custom 5v5 tournament on Howling Abyss (All Random)
->>>>>>> .merge_file_a13028
