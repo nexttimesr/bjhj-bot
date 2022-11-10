@@ -1,34 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Codespaces
-Marketplace
-Explore
-
-@David12345666
-David12345666
-/
-project-setup-team-chigan-systematic-katalog
-Public
-forked from software-assignments-spring2021/project-setup-team-chigan-systematic-katalog
-Code
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-project-setup-team-chigan-systematic-katalog/.gitignore
-@rclin1
-rclin1 made changes to search api
-Latest commit 40a029a on Apr 20, 2021
- History
- 2 contributors
-@github-classroom@rclin1
-127 lines (99 sloc)  1.67 KB
-
 # Compiled source #
 ###################
 *.com
@@ -156,3 +125,6 @@ typings/
 ## Jekyll artifacts
 **/.jekyll-cache
 **/_site/
+
+## Idea
+*.idea
