@@ -1,4 +1,3 @@
-<<<<<<< .merge_file_a13884
 # bjhj-bot
 Discord Bot called BJHJ BOT
 =======
