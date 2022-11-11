@@ -61,8 +61,20 @@ async def on_message(message):
             for count, d in enumerate(data):
                 code = '{count} Tournament Code: {d}'.format(count=count + 1, d=d)
                 await message.channel.send(code)
+        elif message.content == '$ltl':
+            await message.channel.send('还有你A了多少下塔')
+        elif message.content == '$zl':
+            await message.channel.send('https://www.op.gg/summoners/na/meomei')
         else:
             await message.channel.send('这个XBOX烟谁扔的？')
 
-keep_alive()
-client.run(os.getenv('TOKEN'))
+
+while __name__ == '__main__':
+    try:
+        keep_alive()
+        client.run(os.getenv('TOKEN'))
+    except discord.errors.HTTPException as e:
+        print(e)
+        print("\n\n\nBLOCKED BY RATE LIMITS\nRESTARTING NOW\n\n\n")
+        os.system('kill 1')
+
