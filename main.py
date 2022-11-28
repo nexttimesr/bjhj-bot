@@ -65,6 +65,8 @@ async def on_message(message):
             await message.channel.send('还有你A了多少下塔')
         elif message.content == '$zl':
             await message.channel.send('https://www.op.gg/summoners/na/meomei')
+        elif message.content == '$ls':
+            await message.channel.send('打dang不溜')
         else:
             await message.channel.send('这个XBOX烟谁扔的？')
 
