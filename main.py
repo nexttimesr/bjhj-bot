@@ -13,7 +13,7 @@ intent.message_content = True
 client = discord.Client(intents=intent)
 
 def getCodes(type):
-    url = 'https://americas.api.riotgames.com/lol/tournament-stub/v4/codes'
+    url = 'https://americas.api.riotgames.com/lol/tournament/v4/codes'
 
     count = 20
     team = 5
@@ -31,7 +31,7 @@ def getCodes(type):
 
     params = {
         'count': count,
-        'tournamentId': 7528
+        'tournamentId': os.getenv('ID')
     }
     headers = {
         'X-Riot-Token': os.getenv('RIOT')
