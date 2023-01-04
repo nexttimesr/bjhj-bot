@@ -1,5 +1,6 @@
 # BJHJ-BOT
 A Discord Bot called BJHJ BOT deployed on Azure Web App with a webpage that also gets deployed when the bot is active.
+
 Interesting webpage: https://bjhj-bot.azurewebsites.net/
 
 ## Commands
