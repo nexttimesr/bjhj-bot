@@ -3,6 +3,8 @@ A Discord Bot called BJHJ BOT deployed on Azure Web App with a webpage that also
 
 Interesting webpage: https://bjhj-bot.azurewebsites.net/
 
+BJHJ is name of a school btw.
+
 ## Commands
 ### Commands starts with '$'
 $help: showing all the possible commands
