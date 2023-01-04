@@ -18,13 +18,13 @@ $solo: create 2 League of Legends tournament codes for custom 1v1 tournament on 
 $aram: create 20 League of Legends tournament codes for custom 5v5 tournament on Howling Abyss (All Random)
 
 $ltl, $ls, $zl: interesting commands
-# Github Repository
+## Github Repository
 https://github.com/David12345666/bjhj-bot
 
-# Invite Link
+## Invite Link
 https://discord.com/api/oauth2/authorize?client_id=1040336112440324166&permissions=517547214912&scope=bot
 
-# Possible Upcoming Commands
+## Possible Upcoming Commands
 vote
   
 other ai's
