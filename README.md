@@ -9,9 +9,9 @@ BJHJ is the name of a school btw.
 ### Commands starts with '$'
 $help: showing all the possible commands
 
-$text <prompt>: generate texts based on the prompt using OpenAI's API. (I think it is the older model of the ChatGPT) Possible use cases: simple/medium coding questions, instructions, writing discussions/passages etc, writing documents.
+$text <prompt>: generate texts based on the prompt using OpenAI's API. (I think it is a similar model of ChatGPT without optimizing for chatting) Possible use cases: simple/medium coding/implementation questions, instructions, writing discussions/passages etc, writing documents, generating comments.
 
-$image <prompt>: generate image based on the prompt using OpenAI's API. Possible use cases: nothing, cant generate from very detailed prompt.
+$image <prompt>: generate image based on the prompt using OpenAI's API. Possible use cases: nothing I can think of, cant generate from very detailed prompt.
 
 $nz: create 20 League of Legends tournament codes for custom 5v5 tournament on Summoner's Rift (Tournament Draft)
 
@@ -33,4 +33,4 @@ other ai's
 
 music
   
-other league of legends api's (count enemy master and above players?)
+other league of legends api's
