@@ -63,7 +63,7 @@ def generate_text(prompt):
         model="text-davinci-003",
         prompt=prompt,
         temperature=0.6,
-        max_tokens=150,
+        max_tokens=4000,
         top_p=1,
         frequency_penalty=1,
         presence_penalty=1
@@ -95,12 +95,21 @@ async def on_message(message):
                 data = generate_image(prompt)
                 await message.channel.send(data)
             elif content.startswith('$text '):
-                if len(content) <= 7:
+                if len(content) < 7:
                     await message.channel.send('Prompt too short!')
                     return
                 prompt = content[6:]
                 data = generate_text(prompt)
-                await message.channel.send(data)
+                if len(data) > 2000:
+                    left = 0
+                    right = 1900
+                    while right < len(data):
+                        await message.channel.send(data[left:right])
+                        left += 1900
+                        right += 1900
+                    await message.channel.send(data[left:])
+                else:
+                  await message.channel.send(data)
             elif content == '$ltl':
                 await message.channel.send('还有你A了多少下塔')
             elif content == '$zl':
