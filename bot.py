@@ -6,6 +6,7 @@ import os
 import requests
 import json
 import openai
+from transformers import GPT2TokenizerFast
 
 app = Flask(__name__)
 app.env = "development"
@@ -59,11 +60,14 @@ def generate_image(prompt):
 def generate_text(prompt):
     openai.api_key = os.getenv("OPENAI_API_KEY")
 
+    tokenizer = GPT2TokenizerFast.from_pretrained("gpt2")
+    encoded = tokenizer.encode(prompt)
+    tokens = 4000 - len(encoded)
     response = openai.Completion.create(
         model="text-davinci-003",
         prompt=prompt,
         temperature=0.6,
-        max_tokens=4000,
+        max_tokens=tokens,
         top_p=1,
         frequency_penalty=1,
         presence_penalty=1
