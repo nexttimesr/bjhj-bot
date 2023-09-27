@@ -19,7 +19,7 @@ intent = discord.Intents.default()
 intent.members = True
 intent.message_content = True
 
-client = commands.Bot(command_prefix='$', intents=intent)
+client = commands.Bot(command_prefix='$', intents=intent, help_command=None)
 
 
 @client.event
