@@ -77,13 +77,13 @@ async def nz(ctx):
 
 @client.command()
 async def solo(ctx):
-    data = get_code(nz)
+    data = get_code(solo)
     await ctx.channel.send('Tournament Code: {d}'.format(d=data))
 
 
 @client.command()
 async def aram(ctx):
-    data = get_code(nz)
+    data = get_code(aram)
     await ctx.channel.send('Tournament Code: {d}'.format(d=data))
 
 
@@ -172,8 +172,8 @@ async def on_message(message):
             elif content == '$help':
                 await message.channel.send(
                     '$help: list all available commands\n$uyuki: play audio\n$pause: pause audio\n$unpause: unpause audio\n$stop: stop audio\n$leave: leave channel\n$text <prompt>: generate text based on prompt\n$image '
-                    '<prompt>: generate image based on text (prompt)\n$getcode nz: 5v5 Tournament Draft\n$getcode solo: 1v1 Blind '
-                    'Pick \n$getcode aram: ARAM\n$ls, $ltl, $zl '
+                    '<prompt>: generate image based on text (prompt)\n$nz: 5v5 Tournament Draft\n$solo: 1v1 Blind '
+                    'Pick \n$aram: ARAM\n$ls, $ltl, $zl '
                 )
     except Exception as e:
         print(e)
