@@ -1,6 +1,8 @@
 from flask import Flask
 from threading import Thread
 import discord
+from discord.ext import commands
+from discord import FFmpegPCMAudio
 from dotenv import load_dotenv
 import os
 import requests
@@ -17,7 +19,72 @@ intent = discord.Intents.default()
 intent.members = True
 intent.message_content = True
 
-client = discord.Client(intents=intent)
+client = commands.Bot(command_prefix='$', intents=intent)
+
+
+@client.event
+async def on_ready():
+    print(f'We have logged in as {client.user}')
+
+
+@client.command(pass_context = True)
+async def uyuki(ctx):
+    if ctx.author.voice:
+        channel = ctx.message.author.voice.channel
+        voice = await channel.connect()
+        source = FFmpegPCMAudio('static/sounds/uyuki.m4a')
+        player = voice.play(source)
+    else:
+        await ctx.send("You are not in a channel.")
+
+@client.command(pass_context = True)
+async def leave(ctx):
+    if ctx.author.voice:
+        await ctx.guild.voice_client.disconnect()
+    else:
+        await ctx.send("You are not in a channel.")
+
+@client.command(pass_context = True)
+async def pause(ctx):
+    voice = ctx.voice_client
+    if not voice or not voice.is_playing():
+        await ctx.send("No audio is playing.")
+    elif voice.is_paused():
+        return
+    voice.pause()
+
+
+@client.command(pass_context = True)
+async def unpause(ctx):
+    voice = ctx.voice_client
+    if not voice or not voice.is_paused():
+        await ctx.send("No audio is paused.")
+    elif voice.is_playing():
+        return
+    voice.resume()
+
+@client.command(pass_context = True)
+async def stop(ctx):
+    voice = discord.utils.get(client.voice_clients,guild=ctx.guild)
+    voice.stop()
+
+
+
+@client.command()
+async def nz(ctx):
+    data = get_code(nz)
+    await ctx.channel.send('Tournament Code: {d}'.format(d=data))
+
+@client.command()
+async def solo(ctx):
+    data = get_code(nz)
+    await ctx.channel.send('Tournament Code: {d}'.format(d=data))
+
+
+@client.command()
+async def aram(ctx):
+    data = get_code(nz)
+    await ctx.channel.send('Tournament Code: {d}'.format(d=data))
 
 
 def get_code(game_type):
@@ -45,19 +112,22 @@ def get_code(game_type):
         "teamSize": team
     }
     response = requests.post(url, headers=headers, params=params, json=data)
-    return json.loads(response.text)
+    return json.loads(response.text)[0]
 
 
-def generate_image(prompt):
+@client.command()
+async def image(ctx, *, prompt):
     openai.organization = "org-D0jecI2YDT8MaOLwmOPYST4J"
     openai.api_key = os.getenv("OPENAI_API_KEY")
     openai.Model.list()
     response = openai.Image.create(prompt=prompt, n=1, size="1024x1024")
     image_url = response['data'][0]['url']
-    return image_url
+    await ctx.message.channel.send(image_url)
 
 
-def generate_text(prompt):
+@client.command()
+async def text(ctx, *, prompt):
+    print(prompt)
     openai.api_key = os.getenv("OPENAI_API_KEY")
 
     tokenizer = GPT2TokenizerFast.from_pretrained("gpt2")
@@ -72,12 +142,18 @@ def generate_text(prompt):
         frequency_penalty=1,
         presence_penalty=1
     )
-    return response.get('choices')[0].get('text')
+    data = response.get('choices')[0].get('text')
+    if len(data) > 2000:
+        left = 0
+        right = 1900
+        while right < len(data):
+            await ctx.message.channel.send(data[left:right])
+            left += 1900
+            right += 1900
+        await ctx.message.channel.send(data[left:])
+    else:
+        await ctx.message.channel.send(data)
 
-
-@client.event
-async def on_ready():
-    print(f'We have logged in as {client.user}')
 
 
 @client.event
@@ -85,36 +161,9 @@ async def on_message(message):
     try:
         if message.author == client.user:
             return
-
         if message.content.startswith('$'):
             content = message.content
-            if content == '$nz' or content == '$solo' or content == '$aram':
-                data = get_code(content[1:])[0]
-                await message.channel.send('Tournament Code: {d}'.format(d=data))
-            elif content.startswith('$image '):
-                if len(content) <= 8:
-                    await message.channel.send('Prompt too short!')
-                    return
-                prompt = content[7:]
-                data = generate_image(prompt)
-                await message.channel.send(data)
-            elif content.startswith('$text '):
-                if len(content) < 7:
-                    await message.channel.send('Prompt too short!')
-                    return
-                prompt = content[6:]
-                data = generate_text(prompt)
-                if len(data) > 2000:
-                    left = 0
-                    right = 1900
-                    while right < len(data):
-                        await message.channel.send(data[left:right])
-                        left += 1900
-                        right += 1900
-                    await message.channel.send(data[left:])
-                else:
-                  await message.channel.send(data)
-            elif content == '$ltl':
+            if content == '$ltl':
                 await message.channel.send('还有你A了多少下塔')
             elif content == '$zl':
                 await message.channel.send('https://www.op.gg/summoners/na/meomei')
@@ -122,15 +171,14 @@ async def on_message(message):
                 await message.channel.send('打dang不溜')
             elif content == '$help':
                 await message.channel.send(
-                    '$help: list all available commands\n$text <prompt>: generate text based on prompt\n$image '
-                    '<prompt>: generate image based on text (prompt)\n$nz: 5v5 Tournament Draft\n$solo: 1v1 Blind '
-                    'Pick \n$aram: ARAM\n$ls, $ltl, $zl '
+                    '$help: list all available commands\n$uyuki: play audio\n$pause: pause audio\n$unpause: unpause audio\n$stop: stop audio\n$leave: leave channel\n$text <prompt>: generate text based on prompt\n$image '
+                    '<prompt>: generate image based on text (prompt)\n$getcode nz: 5v5 Tournament Draft\n$getcode solo: 1v1 Blind '
+                    'Pick \n$getcode aram: ARAM\n$ls, $ltl, $zl '
                 )
-            else:
-                await message.channel.send('这个XBOX烟谁扔的？')
     except Exception as e:
         print(e)
         await message.channel.send('出了点错')
+    await client.process_commands(message)
 
 
 def run():
