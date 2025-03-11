@@ -1,4 +1,3 @@
-from flask import Flask
 from threading import Thread
 import discord
 from discord.ext import commands
@@ -9,9 +8,7 @@ import requests
 import json
 import openai
 from transformers import GPT2TokenizerFast
-
-app = Flask(__name__)
-app.env = "development"
+from keep_alive import keep_alive
 
 load_dotenv()
 
@@ -181,10 +178,6 @@ async def on_message(message):
     await client.process_commands(message)
 
 
-def run():
-    def start():
-        client.run(os.getenv('TOKEN'))
-    t = Thread(target=start)
-    t.start()
-
+keep_alive()
+client.run(os.getenv('TOKEN'))
 
