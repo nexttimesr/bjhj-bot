@@ -85,19 +85,11 @@ async def aram(ctx):
 
 
 def get_code(game_type):
-    url = 'https://americas.api.riotgames.com/lol/tournament/v4/codes'
+    url = 'https://na1.api.riotgames.com/lol/tournament/v5/codes'
     count = 1
-    team = 5
-    if game_type == 'solo':
-        team = 1
-    map_type = "SUMMONERS_RIFT"
-    if game_type == 'aram':
-        map_type = "HOWLING_ABYSS"
-    pick = "BLIND_PICK"
-    if game_type == 'aram':
-        pick = 'ALL_RANDOM'
-    elif game_type == 'nz':
-        pick = 'TOURNAMENT_DRAFT'
+    team = 1 if game_type == "solo" else 5
+    map_type = "HOWLING_ABYSS" if game_type == "aram" else "SUMMONERS_RIFT"
+    pick = "TOURNAMENT_DRAFT" if game_type == "nz" else "BLIND_PICK"
 
     params = {'count': count, 'tournamentId': os.getenv('ID')}
     headers = {'X-Riot-Token': os.getenv('RIOT')}
