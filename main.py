@@ -1,5 +1,6 @@
 from threading import Thread
 import discord
+from flask import Flask
 from discord.ext import commands
 from discord import FFmpegPCMAudio
 from dotenv import load_dotenv
@@ -9,6 +10,8 @@ import json
 import openai
 from transformers import GPT2TokenizerFast
 from keep_alive import keep_alive
+
+# app = Flask(__name__)
 
 load_dotenv()
 
@@ -168,8 +171,6 @@ async def on_message(message):
         print(e)
         await message.channel.send('出了点错')
     await client.process_commands(message)
-
-
-keep_alive()
-client.run(os.getenv('TOKEN'))
-
+if __name__ == '__main__':
+    keep_alive()
+    client.run(os.getenv('TOKEN'))
