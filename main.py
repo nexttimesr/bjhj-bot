@@ -88,14 +88,14 @@ async def aram(ctx):
 
 
 def get_code(game_type):
-    url = 'https://na1.api.riotgames.com/lol/tournament/v5/codes'
+    url = 'https://americas.api.riotgames.com/lol/tournament/v5/codes'
     count = 1
     team = 1 if game_type == "solo" else 5
     map_type = "HOWLING_ABYSS" if game_type == "aram" else "SUMMONERS_RIFT"
     pick = "TOURNAMENT_DRAFT" if game_type == "nz" else "BLIND_PICK"
 
     params = {'count': count, 'tournamentId': os.getenv('ID')}
-    headers = {'X-Riot-Token': os.getenv('RIOT')}
+    headers = {'X-Riot-Token': os.getenv('RIOT'), "Origin": "https://developer.riotgames.com"}
     data = {
         "mapType": map_type,
         "metadata": "",
@@ -171,6 +171,7 @@ async def on_message(message):
         print(e)
         await message.channel.send('出了点错')
     await client.process_commands(message)
+
 if __name__ == '__main__':
     keep_alive()
     client.run(os.getenv('TOKEN'))
