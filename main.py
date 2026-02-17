@@ -32,7 +32,7 @@ async def uyuki(ctx):
     if ctx.author.voice:
         channel = ctx.message.author.voice.channel
         voice = await channel.connect()
-        source = FFmpegPCMAudio('static/sounds/uyuki.m4a')
+        source = FFmpegPCMAudio('static/sounds/uyuki.m4a', executable="./ffmpeg")
         player = voice.play(source)
     else:
         await ctx.send("You are not in a channel.")
